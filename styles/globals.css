@@ -180,6 +180,39 @@ body {
 a.issue-link { color: #4361ee; font-weight: 700; text-decoration: none; font-size: 12px; }
 a.issue-link:hover { text-decoration: underline; }
 
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .charts-row { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 768px) {
+  body { padding: 12px; }
+
+  .header { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .header-meta { text-align: left; }
+
+  .kpi-row { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .kpi-value { font-size: 24px; }
+
+  .charts-row { grid-template-columns: 1fr; gap: 8px; }
+  .chart-wrap { height: 180px; }
+
+  .table-card { padding: 12px; overflow-x: auto; }
+  .gridjs-wrapper { min-width: 480px; }
+
+  .tabs { overflow-x: auto; white-space: nowrap; }
+  .tab { padding: 8px 12px; font-size: 11px; }
+}
+
+@media (max-width: 480px) {
+  .kpi-row { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .kpi-card { padding: 12px; }
+  .kpi-value { font-size: 20px; }
+  .kpi-sub { display: none; }
+
+  .card h3, .table-card h3 { font-size: 10px; }
+}
+
 /* ── Loading / Error ─────────────────────────────────────────────────────── */
 .spinner-wrap { text-align: center; padding: 60px 20px; }
 .spinner {
