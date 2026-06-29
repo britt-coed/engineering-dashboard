@@ -563,11 +563,6 @@ export default function Dashboard() {
         <div className="header-meta" id="meta-updated">Loading data…</div>
       </div>
 
-      {/* Project filter pills (populated by JS) */}
-      <div className="filters" id="project-filters">
-        <div className="filter-pill active" data-project="ALL">All Projects</div>
-      </div>
-
       {/* Type filter pills (populated by JS) */}
       <div className="filters type-filters" id="type-filters">
         <div className="filter-pill type-pill active" data-type="ALL">All Types</div>

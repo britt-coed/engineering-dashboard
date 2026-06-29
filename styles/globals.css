@@ -42,7 +42,7 @@ body {
 .filter-pill:hover { border-color: #4361ee; color: #4361ee; }
 .filter-pill.active { background: #4361ee; border-color: #4361ee; color: white; }
 
-.type-filters { margin-top: -10px; }
+.type-filters { margin-top: 0; }
 .type-pill.active { background: #7b2d8b; border-color: #7b2d8b; color: white; }
 .type-pill:hover  { border-color: #7b2d8b; color: #7b2d8b; }
 
