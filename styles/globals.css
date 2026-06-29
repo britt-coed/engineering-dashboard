@@ -106,6 +106,15 @@ body {
   margin-bottom: 12px;
   align-items: stretch;
 }
+.tables-row .table-card {
+  display: flex;
+  flex-direction: column;
+}
+.tables-row .table-scroll-wrap {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+}
 .table-card {
   background: white;
   border-radius: 10px;
