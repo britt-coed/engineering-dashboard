@@ -183,34 +183,37 @@ a.issue-link:hover { text-decoration: underline; }
 /* ── Responsive ──────────────────────────────────────────────────────────── */
 @media (max-width: 1024px) {
   .charts-row { grid-template-columns: 1fr; }
+  .chart-wrap { height: 200px; }
 }
 
 @media (max-width: 768px) {
-  body { padding: 12px; }
+  body { padding: 10px; }
 
-  .header { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .header { flex-direction: column; align-items: flex-start; gap: 4px; }
   .header-meta { text-align: left; }
 
-  .kpi-row { grid-template-columns: 1fr 1fr; gap: 8px; }
-  .kpi-value { font-size: 24px; }
+  .kpi-row { grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+  .kpi-card { padding: 12px 14px; }
+  .kpi-value { font-size: 22px; }
 
-  .charts-row { grid-template-columns: 1fr; gap: 8px; }
-  .chart-wrap { height: 180px; }
+  .charts-row { gap: 10px; margin-bottom: 12px; }
+  .chart-wrap { height: 200px; }
 
-  .table-card { padding: 12px; overflow-x: auto; }
-  .gridjs-wrapper { min-width: 480px; }
+  /* Tables: let container scroll horizontally */
+  .table-card { padding: 12px 10px; }
+  .table-scroll-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .gridjs-container { min-width: 640px; }
 
-  .tabs { overflow-x: auto; white-space: nowrap; }
-  .tab { padding: 8px 12px; font-size: 11px; }
+  .tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .tab { padding: 8px 14px; font-size: 11px; white-space: nowrap; }
 }
 
 @media (max-width: 480px) {
-  .kpi-row { grid-template-columns: 1fr 1fr; gap: 8px; }
-  .kpi-card { padding: 12px; }
-  .kpi-value { font-size: 20px; }
+  .kpi-value { font-size: 18px; }
   .kpi-sub { display: none; }
-
+  .kpi-label { font-size: 9px; }
   .card h3, .table-card h3 { font-size: 10px; }
+  .chart-wrap { height: 170px; }
 }
 
 /* ── Loading / Error ─────────────────────────────────────────────────────── */

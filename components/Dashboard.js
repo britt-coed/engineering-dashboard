@@ -583,8 +583,10 @@ export default function Dashboard() {
       {/* In-progress table */}
       <div className="table-card">
         <h3>In Progress — Sorted by Days Since Last Activity ↑</h3>
-        <div id="inprogress-table">
-          <div className="spinner-wrap"><div className="spinner" /><p>Loading…</p></div>
+        <div className="table-scroll-wrap">
+          <div id="inprogress-table">
+            <div className="spinner-wrap"><div className="spinner" /><p>Loading…</p></div>
+          </div>
         </div>
         <p className="note">
           ℹ︎ "Since Last Activity" uses the Jira updated timestamp as a proxy for time in current status.
@@ -608,14 +610,16 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <div id="tab-engineer">
-          <div className="spinner-wrap"><div className="spinner" /><p>Loading…</p></div>
-        </div>
-        <div id="tab-done" style={{ display:'none' }}>
-          <div className="spinner-wrap"><div className="spinner" /><p>Loading…</p></div>
-        </div>
-        <div id="tab-status" style={{ display:'none' }}>
-          <div className="spinner-wrap"><div className="spinner" /><p>Loading…</p></div>
+        <div className="table-scroll-wrap">
+          <div id="tab-engineer">
+            <div className="spinner-wrap"><div className="spinner" /><p>Loading…</p></div>
+          </div>
+          <div id="tab-done" style={{ display:'none' }}>
+            <div className="spinner-wrap"><div className="spinner" /><p>Loading…</p></div>
+          </div>
+          <div id="tab-status" style={{ display:'none' }}>
+            <div className="spinner-wrap"><div className="spinner" /><p>Loading…</p></div>
+          </div>
         </div>
 
         {/* Engineer drilldown panel */}
