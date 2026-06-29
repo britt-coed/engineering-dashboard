@@ -161,7 +161,9 @@ body {
 .age-none     { background: #f0f0f0; color: #aaa; }
 
 /* ── Grid.js overrides ───────────────────────────────────────────────────── */
-.gridjs-wrapper { border: 1px solid #eee; border-radius: 8px; }
+.gridjs-wrapper { border: 1px solid #eee; border-radius: 8px; width: 100%; }
+.gridjs-wrapper table { width: 100%; }
+.gridjs-container { width: 100%; }
 .gridjs-thead th.gridjs-th {
   background: #fafbfc;
   font-size: 10px;

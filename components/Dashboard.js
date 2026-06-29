@@ -232,14 +232,14 @@ function renderInProgress(active) {
     ]);
 
   renderGrid('inprogress-table', [
-    { name:'Key',            formatter: c => gjHtml(keyLink(c)) },
-    { name:'Summary',        width:'32%' },
-    { name:'Status',         formatter: c => gjHtml(c), sort:false },
-    { name:'Assignee' },
-    { name:'Project',        width:'80px' },
-    { name:'Priority',       formatter: c => gjHtml(c), sort:false },
-    { name:'Since Update',   formatter: c => gjHtml(c) },
-    { name:'Age',            formatter: c => gjHtml(c) },
+    { name:'Key',       formatter: c => gjHtml(keyLink(c)), width:'90px' },
+    { name:'Summary',   width:'34%' },
+    { name:'Status',    formatter: c => gjHtml(c), sort:false, width:'120px' },
+    { name:'Assignee',  width:'130px' },
+    { name:'Project',   width:'72px' },
+    { name:'Priority',  formatter: c => gjHtml(c), sort:false, width:'100px' },
+    { name:'Stale',     formatter: c => gjHtml(c), width:'70px' },
+    { name:'Age',       formatter: c => gjHtml(c), width:'70px' },
   ], rows, { search:true, pagination:{ limit:15 } });
 }
 
