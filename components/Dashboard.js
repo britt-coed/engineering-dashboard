@@ -232,7 +232,6 @@ function renderInProgress(active) {
       trunc(i.fields.summary, 75),
       statusHtml(i.fields.status?.name, i.fields.status?.statusCategory?.key),
       i.fields.assignee?.displayName||'Unassigned',
-      i.fields.project?.key||'',
       priorityHtml(i.fields.priority?.name),
       ageHtml(daysSince(i.fields.updated)),
       ageHtml(daysSince(i.fields.created)),
@@ -240,10 +239,9 @@ function renderInProgress(active) {
 
   renderGrid('inprogress-table', [
     { name:'Key',       formatter: c => gjHtml(keyLink(c)), width:'90px' },
-    { name:'Summary',   width:'34%' },
+    { name:'Summary',   width:'38%' },
     { name:'Status',    formatter: c => gjHtml(c), sort:false, width:'120px' },
-    { name:'Assignee',  width:'130px' },
-    { name:'Project',   width:'72px' },
+    { name:'Assignee',  width:'140px' },
     { name:'Priority',  formatter: c => gjHtml(c), sort:false, width:'100px' },
     { name:'Stale',     formatter: c => gjHtml(c), width:'70px' },
     { name:'Age',       formatter: c => gjHtml(c), width:'70px' },
