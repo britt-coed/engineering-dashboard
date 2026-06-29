@@ -595,52 +595,67 @@ export default function Dashboard() {
       {/* Two-column table row — stacks on mobile */}
       <div className="tables-row">
 
-      {/* Tabbed section — By Engineer / Completed / Time in Status */}
-      <div className="table-card">
-        <div className="tabs">
-          <div className="tab active"
-            onClick={e => window.__dash?.showTab('tab-engineer', e.currentTarget)}>
-            By Engineer
+        {/* Tabbed section — By Engineer / Completed / Time in Status */}
+        <div className="table-card">
+          <div className="tabs">
+            <div className="tab active"
+              onClick={e => window.__dash?.showTab('tab-engineer', e.currentTarget)}>
+              By Engineer
+            </div>
+            <div className="tab"
+              onClick={e => window.__dash?.showTab('tab-done', e.currentTarget)}>
+              Completed (Last 30d)
+            </div>
+            <div className="tab"
+              onClick={e => window.__dash?.showTab('tab-status', e.currentTarget)}>
+              Time in Status
+            </div>
           </div>
-          <div className="tab"
-            onClick={e => window.__dash?.showTab('tab-done', e.currentTarget)}>
-            Completed (Last 30d)
+
+          <div className="table-scroll-wrap">
+            <div id="tab-engineer">
+              <div className="spinner-wrap"><div className="spinner" /><p>Loading…</p></div>
+            </div>
+            <div id="tab-done" style={{ display:'none' }}>
+              <div className="spinner-wrap"><div className="spinner" /><p>Loading…</p></div>
+            </div>
+            <div id="tab-status" style={{ display:'none' }}>
+              <div className="spinner-wrap"><div className="spinner" /><p>Loading…</p></div>
+            </div>
           </div>
-          <div className="tab"
-            onClick={e => window.__dash?.showTab('tab-status', e.currentTarget)}>
-            Time in Status
+
+          {/* Engineer drilldown panel */}
+          <div id="engineer-drilldown" style={{ display:'none', marginTop:'14px',
+            borderTop:'2px solid #f0f0f0', paddingTop:'14px' }}>
+            <div style={{ display:'flex', alignItems:'center',
+              justifyContent:'space-between', marginBottom:'10px' }}>
+              <h3 id="drilldown-title" style={{ color:'#4361ee' }}></h3>
+              <button
+                onClick={() => window.__dash?.closeDrilldown()}
+                style={{ background:'none', border:'none', cursor:'pointer',
+                  fontSize:'20px', color:'#aaa', lineHeight:'1' }}
+                aria-label="Close">
+                ×
+              </button>
+            </div>
+            <div id="drilldown-table" />
           </div>
         </div>
 
-        <div className="table-scroll-wrap">
-          <div id="tab-engineer">
-            <div className="spinner-wrap"><div className="spinner" /><p>Loading…</p></div>
+        {/* In-progress table */}
+        <div className="table-card">
+          <h3>In Progress — Sorted by Days Since Last Activity ↑</h3>
+          <div className="table-scroll-wrap">
+            <div id="inprogress-table">
+              <div className="spinner-wrap"><div className="spinner" /><p>Loading…</p></div>
+            </div>
           </div>
-          <div id="tab-done" style={{ display:'none' }}>
-            <div className="spinner-wrap"><div className="spinner" /><p>Loading…</p></div>
-          </div>
-          <div id="tab-status" style={{ display:'none' }}>
-            <div className="spinner-wrap"><div className="spinner" /><p>Loading…</p></div>
-          </div>
+          <p className="note">
+            ℹ︎ "Since Last Activity" uses the Jira updated timestamp as a proxy for time in current status.
+          </p>
         </div>
 
-        {/* Engineer drilldown panel */}
-        <div id="engineer-drilldown" style={{ display:'none', marginTop:'14px',
-          borderTop:'2px solid #f0f0f0', paddingTop:'14px' }}>
-          <div style={{ display:'flex', alignItems:'center',
-            justifyContent:'space-between', marginBottom:'10px' }}>
-            <h3 id="drilldown-title" style={{ color:'#4361ee' }}></h3>
-            <button
-              onClick={() => window.__dash?.closeDrilldown()}
-              style={{ background:'none', border:'none', cursor:'pointer',
-                fontSize:'20px', color:'#aaa', lineHeight:'1' }}
-              aria-label="Close">
-              ×
-            </button>
-          </div>
-          <div id="drilldown-table" />
-        </div>
-      </div>
+      </div>{/* end .tables-row */}
 
       {/* Charts row 1 */}
       <div className="charts-row">
@@ -677,21 +692,6 @@ export default function Dashboard() {
           <div className="chart-wrap"><canvas id="type-chart" /></div>
         </div>
       </div>
-
-      {/* In-progress table */}
-      <div className="table-card">
-        <h3>In Progress — Sorted by Days Since Last Activity ↑</h3>
-        <div className="table-scroll-wrap">
-          <div id="inprogress-table">
-            <div className="spinner-wrap"><div className="spinner" /><p>Loading…</p></div>
-          </div>
-        </div>
-        <p className="note">
-          ℹ︎ "Since Last Activity" uses the Jira updated timestamp as a proxy for time in current status.
-        </p>
-      </div>
-
-      </div>{/* end .tables-row */}
     </div>
   );
 }
