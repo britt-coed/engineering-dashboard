@@ -508,7 +508,7 @@ async function load() {
   try {
     const [active, done] = await Promise.all([
       jiraSearch(
-        `project in (${proj}) AND statusCategory != Done AND issuetype not in (Epic, Subtask) ORDER BY updated ASC`,
+        `project in (${proj}) AND statusCategory != Done AND status != "To Scope" AND issuetype not in (Epic, Subtask) ORDER BY updated ASC`,
         100
       ),
       jiraSearch(
