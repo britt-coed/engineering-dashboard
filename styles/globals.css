@@ -104,7 +104,7 @@ body {
   grid-template-columns: 1fr 1fr;
   gap: 12px;
   margin-bottom: 12px;
-  align-items: start;
+  align-items: stretch;
 }
 .table-card {
   background: white;
