@@ -245,7 +245,7 @@ function renderInProgress(active) {
     { name:'Priority',  formatter: c => gjHtml(c), sort:false, width:'100px' },
     { name:'Stale',     formatter: c => gjHtml(c), width:'70px' },
     { name:'Age',       formatter: c => gjHtml(c), width:'70px' },
-  ], rows, { search:true, pagination:{ limit:15 } });
+  ], rows, { search:true, pagination:{ limit:8 } });
 }
 
 function renderEngineerTable(active, done) {
