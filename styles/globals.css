@@ -99,6 +99,13 @@ body {
 .chart-wrap { height: 210px; position: relative; }
 
 /* ── Tables ──────────────────────────────────────────────────────────────── */
+.tables-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+  align-items: start;
+}
 .table-card {
   background: white;
   border-radius: 10px;
@@ -191,6 +198,7 @@ a.issue-link:hover { text-decoration: underline; }
 }
 
 @media (max-width: 768px) {
+  .tables-row { grid-template-columns: 1fr; }
   body { padding: 10px; }
 
   .header { flex-direction: column; align-items: flex-start; gap: 4px; }
@@ -206,7 +214,7 @@ a.issue-link:hover { text-decoration: underline; }
   /* Tables: let container scroll horizontally */
   .table-card { padding: 12px 10px; }
   .table-scroll-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-  .gridjs-container { min-width: 640px; }
+  .gridjs-container { min-width: 520px; }
 
   .tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; }
   .tab { padding: 8px 14px; font-size: 11px; white-space: nowrap; }

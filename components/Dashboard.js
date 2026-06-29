@@ -592,6 +592,9 @@ export default function Dashboard() {
         </div>
       </div>
 
+      {/* Two-column table row — stacks on mobile */}
+      <div className="tables-row">
+
       {/* Tabbed section — By Engineer / Completed / Time in Status */}
       <div className="table-card">
         <div className="tabs">
@@ -687,6 +690,8 @@ export default function Dashboard() {
           ℹ︎ "Since Last Activity" uses the Jira updated timestamp as a proxy for time in current status.
         </p>
       </div>
+
+      </div>{/* end .tables-row */}
     </div>
   );
 }
