@@ -12,6 +12,7 @@ const FIELDS      = ['summary','status','assignee','created','updated',
 // ─── Module-level state (vanilla JS — no React re-renders needed) ──────────
 let allActive = [], allDone = [];
 let activeProjects = new Set(['ALL']);
+let activeTypes    = new Set(['ALL']);
 let charts = {};
 let grids  = {};
 
@@ -53,10 +54,16 @@ async function jiraSearch(jql, maxResults = 100) {
 
 // ─── Filtered view ──────────────────────────────────────────────────────────
 function filtered() {
-  if (activeProjects.has('ALL')) return { active: allActive, done: allDone };
+  const byProject = activeProjects.has('ALL')
+    ? { active: allActive, done: allDone }
+    : {
+        active: allActive.filter(i => activeProjects.has(i.fields.project?.key)),
+        done:   allDone.filter(i => activeProjects.has(i.fields.project?.key)),
+      };
+  if (activeTypes.has('ALL')) return byProject;
   return {
-    active: allActive.filter(i => activeProjects.has(i.fields.project?.key)),
-    done:   allDone.filter(i => activeProjects.has(i.fields.project?.key)),
+    active: byProject.active.filter(i => activeTypes.has(i.fields.issuetype?.name)),
+    done:   byProject.done.filter(i => activeTypes.has(i.fields.issuetype?.name)),
   };
 }
 
@@ -439,6 +446,46 @@ function setupFilters() {
   });
 }
 
+// ─── Type filter ─────────────────────────────────────────────────────────────
+function setupTypeFilters() {
+  const seen = new Set([
+    ...allActive.map(i => i.fields.issuetype?.name),
+    ...allDone.map(i => i.fields.issuetype?.name),
+  ].filter(Boolean));
+
+  const container = document.getElementById('type-filters');
+  if (!container) return;
+  container.innerHTML = '<div class="filter-pill type-pill active" data-type="ALL">All Types</div>';
+  [...seen].sort().forEach(name => {
+    const pill = document.createElement('div');
+    pill.className = 'filter-pill type-pill';
+    pill.dataset.type = name;
+    pill.textContent = name;
+    container.appendChild(pill);
+  });
+  container.addEventListener('click', e => {
+    const pill = e.target.closest('.type-pill');
+    if (!pill) return;
+    const t = pill.dataset.type;
+    if (t === 'ALL') {
+      activeTypes = new Set(['ALL']);
+      container.querySelectorAll('.type-pill').forEach(el => el.classList.remove('active'));
+      pill.classList.add('active');
+    } else {
+      activeTypes.delete('ALL');
+      container.querySelector('[data-type="ALL"]').classList.remove('active');
+      pill.classList.toggle('active');
+      if (pill.classList.contains('active')) activeTypes.add(t);
+      else activeTypes.delete(t);
+      if (!activeTypes.size) {
+        activeTypes.add('ALL');
+        container.querySelector('[data-type="ALL"]').classList.add('active');
+      }
+    }
+    renderAll();
+  });
+}
+
 // ─── Render all ──────────────────────────────────────────────────────────────
 function renderAll() {
   const { active, done } = filtered();
@@ -474,6 +521,7 @@ async function load() {
     setText('meta-updated',
       `Refreshed ${new Date().toLocaleTimeString('en-GB')} · ${active.length} active, ${done.length} done (30d)`);
     setupFilters();
+    setupTypeFilters();
     renderAll();
   } catch (err) {
     console.error(err);
@@ -520,6 +568,11 @@ export default function Dashboard() {
         <div className="filter-pill active" data-project="ALL">All Projects</div>
       </div>
 
+      {/* Type filter pills (populated by JS) */}
+      <div className="filters type-filters" id="type-filters">
+        <div className="filter-pill type-pill active" data-type="ALL">All Types</div>
+      </div>
+
       {/* KPI cards */}
       <div className="kpi-row" id="kpi-row">
         <div className="kpi-card blue">
@@ -541,6 +594,53 @@ export default function Dashboard() {
           <div className="kpi-label">Stale (&gt;5 days)</div>
           <div className="kpi-value" id="kpi-stale">—</div>
           <div className="kpi-sub">in progress, no activity</div>
+        </div>
+      </div>
+
+      {/* Tabbed section — By Engineer / Completed / Time in Status */}
+      <div className="table-card">
+        <div className="tabs">
+          <div className="tab active"
+            onClick={e => window.__dash?.showTab('tab-engineer', e.currentTarget)}>
+            By Engineer
+          </div>
+          <div className="tab"
+            onClick={e => window.__dash?.showTab('tab-done', e.currentTarget)}>
+            Completed (Last 30d)
+          </div>
+          <div className="tab"
+            onClick={e => window.__dash?.showTab('tab-status', e.currentTarget)}>
+            Time in Status
+          </div>
+        </div>
+
+        <div className="table-scroll-wrap">
+          <div id="tab-engineer">
+            <div className="spinner-wrap"><div className="spinner" /><p>Loading…</p></div>
+          </div>
+          <div id="tab-done" style={{ display:'none' }}>
+            <div className="spinner-wrap"><div className="spinner" /><p>Loading…</p></div>
+          </div>
+          <div id="tab-status" style={{ display:'none' }}>
+            <div className="spinner-wrap"><div className="spinner" /><p>Loading…</p></div>
+          </div>
+        </div>
+
+        {/* Engineer drilldown panel */}
+        <div id="engineer-drilldown" style={{ display:'none', marginTop:'14px',
+          borderTop:'2px solid #f0f0f0', paddingTop:'14px' }}>
+          <div style={{ display:'flex', alignItems:'center',
+            justifyContent:'space-between', marginBottom:'10px' }}>
+            <h3 id="drilldown-title" style={{ color:'#4361ee' }}></h3>
+            <button
+              onClick={() => window.__dash?.closeDrilldown()}
+              style={{ background:'none', border:'none', cursor:'pointer',
+                fontSize:'20px', color:'#aaa', lineHeight:'1' }}
+              aria-label="Close">
+              ×
+            </button>
+          </div>
+          <div id="drilldown-table" />
         </div>
       </div>
 
@@ -591,53 +691,6 @@ export default function Dashboard() {
         <p className="note">
           ℹ︎ "Since Last Activity" uses the Jira updated timestamp as a proxy for time in current status.
         </p>
-      </div>
-
-      {/* Tabbed section */}
-      <div className="table-card">
-        <div className="tabs">
-          <div className="tab active"
-            onClick={e => window.__dash?.showTab('tab-engineer', e.currentTarget)}>
-            By Engineer
-          </div>
-          <div className="tab"
-            onClick={e => window.__dash?.showTab('tab-done', e.currentTarget)}>
-            Completed (Last 30d)
-          </div>
-          <div className="tab"
-            onClick={e => window.__dash?.showTab('tab-status', e.currentTarget)}>
-            Time in Status
-          </div>
-        </div>
-
-        <div className="table-scroll-wrap">
-          <div id="tab-engineer">
-            <div className="spinner-wrap"><div className="spinner" /><p>Loading…</p></div>
-          </div>
-          <div id="tab-done" style={{ display:'none' }}>
-            <div className="spinner-wrap"><div className="spinner" /><p>Loading…</p></div>
-          </div>
-          <div id="tab-status" style={{ display:'none' }}>
-            <div className="spinner-wrap"><div className="spinner" /><p>Loading…</p></div>
-          </div>
-        </div>
-
-        {/* Engineer drilldown panel */}
-        <div id="engineer-drilldown" style={{ display:'none', marginTop:'14px',
-          borderTop:'2px solid #f0f0f0', paddingTop:'14px' }}>
-          <div style={{ display:'flex', alignItems:'center',
-            justifyContent:'space-between', marginBottom:'10px' }}>
-            <h3 id="drilldown-title" style={{ color:'#4361ee' }}></h3>
-            <button
-              onClick={() => window.__dash?.closeDrilldown()}
-              style={{ background:'none', border:'none', cursor:'pointer',
-                fontSize:'20px', color:'#aaa', lineHeight:'1' }}
-              aria-label="Close">
-              ×
-            </button>
-          </div>
-          <div id="drilldown-table" />
-        </div>
       </div>
     </div>
   );
