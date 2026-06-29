@@ -149,6 +149,10 @@ body {
   font-size: 10px;
   font-weight: 700;
   white-space: nowrap;
+  max-width: 110px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
 }
 .b-todo       { background: #eef0fb; color: #4361ee; }
 .b-inprogress { background: #fff4e6; color: #e07b00; }
