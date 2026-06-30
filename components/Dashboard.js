@@ -665,7 +665,7 @@ export default function Dashboard() {
         </div>
         <div className="card">
           <h3>Active Issues by Engineer</h3>
-          <div className="chart-wrap"><canvas id="engineer-chart" /></div>
+          <div className="chart-wrap chart-wrap-tall"><canvas id="engineer-chart" /></div>
         </div>
       </div>
 
