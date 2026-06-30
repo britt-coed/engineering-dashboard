@@ -43,8 +43,8 @@ body {
 .filter-pill.active { background: #4361ee; border-color: #4361ee; color: white; }
 
 .type-filters { margin-top: 0; }
-.type-pill.active { background: #7b2d8b; border-color: #7b2d8b; color: white; }
-.type-pill:hover  { border-color: #7b2d8b; color: #7b2d8b; }
+.type-pill.active { background: #1d4ed8; border-color: #1d4ed8; color: white; }
+.type-pill:hover  { border-color: #1d4ed8; color: #1d4ed8; }
 
 /* ── KPI row ─────────────────────────────────────────────────────────────── */
 .kpi-row {
@@ -60,10 +60,10 @@ body {
   box-shadow: 0 1px 3px rgba(0,0,0,.07);
   border-left: 3px solid transparent;
 }
-.kpi-card.blue   { border-left-color: #4361ee; }
-.kpi-card.orange { border-left-color: #f4a261; }
-.kpi-card.green  { border-left-color: #2dc653; }
-.kpi-card.red    { border-left-color: #e63946; }
+.kpi-card.blue   { border-left-color: #1a3a8f; }
+.kpi-card.orange { border-left-color: #4361ee; }
+.kpi-card.green  { border-left-color: #4895ef; }
+.kpi-card.red    { border-left-color: #4cc9f0; }
 .kpi-label {
   font-size: 10px;
   font-weight: 700;
@@ -154,14 +154,14 @@ body {
   text-overflow: ellipsis;
   vertical-align: middle;
 }
-.b-todo       { background: #eef0fb; color: #4361ee; }
-.b-inprogress { background: #fff4e6; color: #e07b00; }
-.b-done       { background: #e6f9ee; color: #1a8c45; }
-.b-critical   { background: #ffeaea; color: #c0392b; }
-.b-high       { background: #fff4e6; color: #d35400; }
-.b-medium     { background: #f5f0ff; color: #7d3c98; }
-.b-low        { background: #eafaf1; color: #1e8449; }
-.b-backlog    { background: #f0f0f0; color: #888; }
+.b-todo       { background: #e8eeff; color: #1a3a8f; }
+.b-inprogress { background: #dbeafe; color: #1d4ed8; }
+.b-done       { background: #bfdbfe; color: #1e40af; }
+.b-critical   { background: #1a3a8f; color: #fff; }
+.b-high       { background: #dbeafe; color: #1d4ed8; }
+.b-medium     { background: #e0f2fe; color: #0369a1; }
+.b-low        { background: #e8f4fd; color: #4895ef; }
+.b-backlog    { background: #f0f4ff; color: #93a8d8; }
 
 .age {
   display: inline-block;
@@ -170,10 +170,10 @@ body {
   font-size: 11px;
   font-weight: 700;
 }
-.age-fresh    { background: #e6f9ee; color: #1a8c45; }
-.age-moderate { background: #fff8e1; color: #c77700; }
-.age-stale    { background: #ffeaea; color: #c0392b; }
-.age-none     { background: #f0f0f0; color: #aaa; }
+.age-fresh    { background: #e8f4fd; color: #4895ef; }
+.age-moderate { background: #dbeafe; color: #1d4ed8; }
+.age-stale    { background: #1a3a8f; color: #fff; }
+.age-none     { background: #f0f4ff; color: #93a8d8; }
 
 /* ── Grid.js overrides ───────────────────────────────────────────────────── */
 .gridjs-wrapper { border: 1px solid #eee; border-radius: 8px; width: 100%; }

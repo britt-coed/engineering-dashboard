@@ -126,9 +126,10 @@ function renderStatusChart(active) {
   const counts = {};
   active.forEach(i => { const s = i.fields.status?.name||'?'; counts[s]=(counts[s]||0)+1; });
   const entries = Object.entries(counts).sort((a,b)=>b[1]-a[1]);
+  const blueShades = ['#1a3a8f','#1d4ed8','#2563eb','#3b82f6','#4895ef','#60a5fa','#93c5fd','#bfdbfe'];
   makeChart('status-chart', 'bar',
     entries.map(([k])=>k), entries.map(([,v])=>v),
-    entries.map((_,i)=>`hsl(${(i*53+220)%360},65%,62%)`));
+    entries.map((_,i)=>blueShades[i % blueShades.length]));
 }
 
 function renderEngineerChart(active) {
@@ -139,10 +140,11 @@ function renderEngineerChart(active) {
     counts[n] = (counts[n]||0)+1;
   });
   const entries = Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,12);
+  const engBlues = ['#1a3a8f','#1d4ed8','#2563eb','#3b82f6','#4895ef','#4cc9f0','#60a5fa','#93c5fd','#bfdbfe','#dbeafe','#e0f2fe','#e8f4fd'];
   makeChart('engineer-chart', 'bar',
     entries.map(([n])=>n.split(' ')[0]),
     entries.map(([,v])=>v),
-    entries.map((_,i)=>`hsl(${(i*61+180)%360},60%,60%)`),
+    entries.map((_,i)=>engBlues[i % engBlues.length]),
     { axis: 'y' });
 }
 
@@ -164,10 +166,10 @@ function renderThroughputChart(done) {
   charts['throughput-chart'] = new Chart(ctx, {
     type: 'line',
     data: { labels, datasets: [{
-      data: values, borderColor:'#4361ee',
-      backgroundColor:'rgba(67,97,238,0.12)',
+      data: values, borderColor:'#1a3a8f',
+      backgroundColor:'rgba(26,58,143,0.10)',
       borderWidth:2.5, pointRadius:5,
-      pointBackgroundColor:'#4361ee',
+      pointBackgroundColor:'#1a3a8f',
       fill:true, tension:0.3
     }]},
     options: {
@@ -195,7 +197,7 @@ function renderCycleTimeChart(done) {
   });
   makeChart('cycletime-chart','bar',
     Object.keys(b), Object.values(b),
-    ['#2dc653','#4cc9f0','#4361ee','#f4a261','#e63946']);
+    ['#bfdbfe','#60a5fa','#3b82f6','#1d4ed8','#1a3a8f']);
 }
 
 function renderPriorityChart(active) {
@@ -203,8 +205,8 @@ function renderPriorityChart(active) {
   const counts = {};
   active.forEach(i => { const p=i.fields.priority?.name||'?'; counts[p]=(counts[p]||0)+1; });
   const labels = ORDER.filter(k=>counts[k]);
-  const colors = { Critical:'#e63946',High:'#f4a261',Medium:'#4361ee',
-                   Low:'#2dc653',Backlog:'#adb5bd' };
+  const colors = { Critical:'#1a3a8f',High:'#1d4ed8',Medium:'#3b82f6',
+                   Low:'#93c5fd',Backlog:'#dbeafe' };
   makeChart('priority-chart','doughnut',labels,labels.map(l=>counts[l]),
     labels.map(l=>colors[l]||'#ccc'),
     { legend:{ position:'right', labels:{font:{size:11},padding:10,boxWidth:12} } });
@@ -214,7 +216,7 @@ function renderTypeChart(active) {
   const counts = {};
   active.forEach(i => { const t=i.fields.issuetype?.name||'?'; counts[t]=(counts[t]||0)+1; });
   const entries = Object.entries(counts).sort((a,b)=>b[1]-a[1]);
-  const palette = ['#4361ee','#4cc9f0','#f4a261','#2dc653','#e63946','#7b2d8b','#adb5bd'];
+  const palette = ['#1a3a8f','#1d4ed8','#2563eb','#3b82f6','#4895ef','#60a5fa','#93c5fd'];
   makeChart('type-chart','doughnut',
     entries.map(([k])=>k), entries.map(([,v])=>v),
     entries.map((_,i)=>palette[i%palette.length]),
