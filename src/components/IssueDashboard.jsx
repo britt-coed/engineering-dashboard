@@ -29,7 +29,7 @@ const PRIORITY_COLOR = {
   Highest: '#ef4444', High: '#f97316', Medium: '#eab308', Low: '#3b82f6', Lowest: '#94a3b8',
 }
 
-const BASE = 'project = "CoEditor Platform" AND labels = "OQS-Request"'
+const BASE = 'project in (CP, CXO) AND labels = "OQS-Request"'
 
 const PRESETS = [
   { label: 'All',           jql: `${BASE} ORDER BY updated DESC` },
@@ -376,7 +376,8 @@ export default function IssueDashboard() {
   const [expanded,   setExpanded]   = useState({})
 
   const { issues: raw, total, loading, error, refetch } = useJiraIssues(jql, 500)
-const issues = useMemo(() => raw, [raw])
+  const issues = useMemo(() => raw, [raw])
+
   const displayed = useMemo(() => {
     const filtered = typeFilter ? issues.filter(({ fields }) => fields.issuetype?.name === typeFilter) : issues
     return sortIssues(filtered, SORT_OPTIONS[sortIdx])
